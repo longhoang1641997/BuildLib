@@ -1,14 +1,6 @@
-import html from './core.js'
+import {attach} from './store.js'
+import App from './component/app.js'
 
-const cars  = ['BMW', 'Vinfast', 'Volkswagen']
+console.log(App)
+attach(App, document.getElementById('root'));  
 
-const isSuccess = true
-
-const output = html`
-    <h1>${isSuccess}</h1>
-    <ul>
-    ${cars.map(car => `<li>${car}</li>`)}
-    </ul>
-`
-
-console.log(output)

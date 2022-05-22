@@ -9,6 +9,8 @@
 
 // Method 2
 export default function html([first, ...nonTemplateStr], ...str) {
+
+    console.log('HTML core functions')
     return str.reduce(
         (initial, cur) => initial.concat(cur, nonTemplateStr.shift()), [first]
     )
@@ -16,4 +18,31 @@ export default function html([first, ...nonTemplateStr], ...str) {
     .join('')
 } 
 
+export function createStorage(reducer) {
+    console.log('Creating storage')
+    let state = reducer();
+    const roots = new Map();
+    function render() {
+        for(const [root, component] of roots) {
+            const output = component()
+            console.log(output)
+            root.innerHTML = output
+        }   
+    }
+
+    return {
+        attach(component, root) {
+            roots.set(root, component)
+            render()
+        },
+        connect(selector = state => state) {
+            return component => (props, ...args) => 
+                component(Object.assign({}, props, selector(state), ...args))
+        },
+        dispatch(action, ...args) {
+            state = reducer(state, action, args)
+            render()
+        }
+    }
+}
 
