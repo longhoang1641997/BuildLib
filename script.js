@@ -12,7 +12,3 @@ const output = html`
 `
 
 console.log(output)
-
-const [destrutoringCar] = cars
-
-console.log(destrutoringCar)
